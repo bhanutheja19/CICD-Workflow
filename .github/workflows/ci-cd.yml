@@ -26,7 +26,7 @@ jobs:
         
         with:
           node-version: '20'
-          cache: 'npm' # Speeds up builds by caching packages
+          #cache: 'npm' # Speeds up builds by caching packages
 
       # Step 3: Install all project dependencies
       - name: Install Dependencies
