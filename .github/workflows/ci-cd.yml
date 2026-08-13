@@ -21,8 +21,10 @@ jobs:
       # Step 2: Set up the programming environment
       - name: Setup Node.js Environment
         uses: actions/setup-node@v4
+      
+        
         with:
-          node-version: '24'
+          node-version: '20'
           cache: 'npm' # Speeds up builds by caching packages
 
       # Step 3: Install all project dependencies
@@ -36,7 +38,8 @@ jobs:
       # Step 5: Execute unit and integration tests
       - name: Run Tests
         run: npm test
-
+        
+         ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true
   continuous-deployment:
     # Only run deployment if the integration job passes successfully
     needs: continuous-integration
