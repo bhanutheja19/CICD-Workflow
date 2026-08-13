@@ -1,0 +1,52 @@
+
+name: CI/CD Pipeline
+
+# 1. Define what events trigger the pipeline
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 2. Define the execution blocks (Jobs)
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Pull down the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up the programming environment
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm' # Speeds up builds by caching packages
+
+      # Step 3: Install all project dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 4: Run your code linters or format checks
+      - name: Run Code Lints
+        run: npm run lint --if-present
+
+      # Step 5: Execute unit and integration tests
+      - name: Run Tests
+        run: npm test
+
+  continuous-deployment:
+    # Only run deployment if the integration job passes successfully
+    needs: continuous-integration
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Example step: Deploying via SSH, cloud provider, or Docker
+      - name: Deploy Application
+        run: echo "Deploying code to the production server..."
