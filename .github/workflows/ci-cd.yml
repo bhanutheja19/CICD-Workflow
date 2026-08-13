@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js Environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm' # Speeds up builds by caching packages
 
       # Step 3: Install all project dependencies
