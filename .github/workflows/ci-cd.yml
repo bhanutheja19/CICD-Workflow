@@ -12,7 +12,8 @@ on:
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
-
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     steps:
       # Step 1: Pull down the repository code
       - name: Checkout Code
@@ -39,7 +40,6 @@ jobs:
       - name: Run Tests
         run: npm test
         
-         ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true
   continuous-deployment:
     # Only run deployment if the integration job passes successfully
     needs: continuous-integration
